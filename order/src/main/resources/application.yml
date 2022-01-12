@@ -1,0 +1,68 @@
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+  endpoints:
+    jmx:
+      exposure:
+       include: '*'
+    web:
+     exposure:
+      include: '*'
+      base-path: /actuator
+    cors:
+      allowed-origins: 'true'
+      enabled-by-default: 'false'
+      
+server:
+    port: 2025 
+    servlet:
+      session:
+        timeout: 5m
+    compression:
+      enabled: true
+      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+      min-response-size: 1024
+    
+spring:
+  application:
+    name: order
+
+  profiles:
+    active:
+      default
+     
+  cloud: 
+    loadbalancer:
+        retry:
+          enabled: true
+          max-retries-on-next-service-instance: 2
+          backoff.enabled: true
+          backoff.min-backoff: 500ms
+          backoff.max-backoff: 3s
+          retryable-status-codes: 500,502,503,404        
+    discovery:
+       service-id: ${spring.application.name}
+       enabled: true 
+  
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false  
+ 
+logging:
+    level:
+      root: INFO
+      io.project.app: INFO
+
+ 
+eureka:
+  instance:  
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    enabled: true
+    registryFetchIntervalSeconds: 5
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka

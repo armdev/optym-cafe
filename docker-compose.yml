@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+
+      
+  eureka:
+    image: eureka
+    build: ./eureka  
+    container_name: eureka
+    hostname: eureka
+    ports:
+      - '8761:8761'   
+    networks:
+      - marketplacenetwork
+      
+  order:
+    image: order
+    build: ./order   
+    hostname: order
+    ports:
+      - '2025:2025'
+    networks:
+      - marketplacenetwork  
+      
+  coffee:
+    image: coffee
+    build: ./coffee  
+    container_name: coffee
+    hostname: coffee
+    ports:
+      - '2026:2026'   
+    networks:
+      - marketplacenetwork      
+ 
+networks:
+  marketplacenetwork:
+    driver: bridge   
+    ipam:
+      driver: default
