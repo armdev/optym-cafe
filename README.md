@@ -11,6 +11,8 @@ example request
 
 http://localhost:2025/api/v2/order/coffee?coffeeType=Americano
 
+benchmark: siege --concurrent=10000 --time=5M http://localhost:2025/api/v2/order/coffee?coffeeType=Americano
+
 order
 
 http://localhost:2025/swagger-ui.html
